@@ -1,10 +1,12 @@
-let data = [{"name":"Mikky","type":"dog","age":3},{"name":"Neon","type":"cat","age":0.5}];
+let data = [{"name":"Mikky","type":"dog","age":3},{"name":"Neon","type":"cat","age":0.5},{"name":"Neon","type":"cat","age":0.5},{"name":"Neon","type":"cat","age":0.5}];
 //Создаём таблицу
 const table = document.createElement('table');
 const thead = document.createElement('thead');
 const tbody = document.createElement('tbody');
 const main = document.querySelector('main');
+let index = 0;
 let deleteTable;
+let stroks;
   
 table.appendChild(thead);
 table.appendChild(tbody);
@@ -34,15 +36,33 @@ row_1.appendChild(heading_2);
 row_1.appendChild(heading_3);
 thead.appendChild(row_1);
 
+create();
+
+for(i=0; i < stroks.length; i++){
+	 let tds = stroks[i].querySelectorAll(".td");
+	 console.log(tds);
+	tds.forEach( function(td) {
+		td.addEventListener('click', function (){
+			console.log(this.innerHTML);
+		});
+	});
+}
+
+
 function create(){
 data.forEach( function(item) {
+	index++;
 	let row_2 = document.createElement('tr');
+	row_2.className = "strok";
 	let row_2_data_1 = document.createElement('td');
-	row_2_data_1.innerHTML = item.name;
+	row_2_data_1.innerHTML = index + " :" + item.name;
+	row_2_data_1.className = 'td name';
 	let row_2_data_2 = document.createElement('td');
 	row_2_data_2.innerHTML = item.type;
+	row_2_data_2.className = 'td type';
 	let row_2_data_3 = document.createElement('td');
 	row_2_data_3.innerHTML = item.age;
+	row_2_data_3.className = 'td age';
 	let row_2_data_4 = document.createElement('td');
 	row_2_data_4.innerHTML = 'х';
 	row_2_data_4.className = 'delete';
@@ -54,16 +74,22 @@ data.forEach( function(item) {
 	row_2.appendChild(row_2_data_4);
 	tbody.appendChild(row_2);
 
+	stroks = document.querySelectorAll(".strok");
+
 });
 	deleteTable = document.querySelectorAll(".delete");
 }
 
-create();
-console.log(deleteTable);
+
 deleteTable.forEach( function(item) {
 	item.onclick = function (){
+		let name = this.parentElement.querySelector(".name").innerHTML;
+		let char = parseInt(name.slice(0,1));
+		console.log(char-1);
+		delete data[char-1];
 		console.log(data);
 		this.parentElement.remove();
+		stroks = document.querySelectorAll(".stroks");
 	}
 });
 
