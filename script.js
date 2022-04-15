@@ -39,11 +39,50 @@ thead.appendChild(row_1);
 create();
 
 for(i=0; i < stroks.length; i++){
-	 let tds = stroks[i].querySelectorAll(".td");
-	 console.log(tds);
+	let tds = stroks[i].querySelectorAll(".td");
 	tds.forEach( function(td) {
-		td.addEventListener('click', function (){
-			console.log(this.innerHTML);
+		td.addEventListener('click', function inter (){
+
+			let input = document.createElement("input");
+			let index = this.parentElement.querySelector(".name").innerHTML;
+
+			input.value = this.innerHTML;
+			this.innerHTML = "";
+			this.appendChild(input);
+			
+			let inner = this;
+
+			input.addEventListener("blur", function(){
+				inner.innerHTML = this.value;
+				let indexClass = String (inner.className.split(" ")[1]);
+
+				if (indexClass == "name") {
+					index = index.slice(0, 3);
+					let n = index.slice(0, 1);
+					data[n-1].name = this.value;
+					inner.innerHTML = index + this.value;
+
+				}else{
+
+
+					let name = inner.parentElement.querySelector(".name").innerHTML;
+					let char = parseInt(name.slice(0,1));
+					
+					if (indexClass == "type") {
+						data[char-1].type = this.value;
+					} else if(indexClass == "name"){
+						data[char-1].name = this.value;
+					}else if (indexClass == "age") {
+						data[char-1].age = this.value;
+					}
+
+				}
+
+				inner.addEventListener("click", inter);
+
+			});
+
+			this.removeEventListener('click', inter);
 		});
 	});
 }
@@ -85,9 +124,7 @@ deleteTable.forEach( function(item) {
 	item.onclick = function (){
 		let name = this.parentElement.querySelector(".name").innerHTML;
 		let char = parseInt(name.slice(0,1));
-		console.log(char-1);
 		delete data[char-1];
-		console.log(data);
 		this.parentElement.remove();
 		stroks = document.querySelectorAll(".stroks");
 	}
