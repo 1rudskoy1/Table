@@ -7,6 +7,7 @@ const main = document.querySelector('main');
 let index = 0;
 let deleteTable;
 let stroks;
+let verifyBtn;
   
 table.appendChild(thead);
 table.appendChild(tbody);
@@ -18,6 +19,84 @@ buttonAdd.className = "buttons buttons_add";
 buttonAdd.innerHTML = "Добавить";
 
 div.appendChild(buttonAdd);
+
+buttonAdd.addEventListener("click", function (){
+	let alltr = document.querySelectorAll(".strok");
+	if (alltr[alltr.length-1].classList != "blank strok") {
+
+		let row_2 = document.createElement('tr');
+		row_2.className = "blank strok";
+		let row_2_data_1 = document.createElement('td');
+		row_2_data_1.className = 'td name';
+		let inputName = document.createElement("input");
+		inputName.className = "input";
+		let row_2_data_2 = document.createElement('td');
+		row_2_data_2.className = 'td type';
+		
+		let inputType = document.createElement("input");
+		inputType.className = "input";
+		
+		let row_2_data_3 = document.createElement('td');
+		row_2_data_3.className = 'td age';
+		
+		let inputAge = document.createElement("input");
+		inputAge.className = "input";
+		
+		let row_2_data_4 = document.createElement('td');
+		row_2_data_4.innerHTML = 'х';
+		row_2_data_4.className = 'delete';
+
+		let verifyBtn = document.createElement('td');
+		verifyBtn.innerHTML = 'ок';
+		verifyBtn.className = 'finish-add';
+		verifyBtn.style.color = "green";
+		verifyBtn.style.cursor = "pointer";
+		
+		row_2_data_1.appendChild(inputName)
+		row_2_data_2.appendChild(inputType)
+		row_2_data_3.appendChild(inputAge)
+		row_2.appendChild(row_2_data_1);
+		row_2.appendChild(row_2_data_2);
+		row_2.appendChild(row_2_data_3);
+		row_2.appendChild(verifyBtn);
+		row_2.appendChild(row_2_data_4);
+		tbody.appendChild(row_2);
+
+		verifyBtn.addEventListener("click", function (){
+			data.push({});
+			verify(this);	
+			this.remove();
+		});
+	}
+});
+
+
+function verify(contekst){
+	let inputs = contekst.parentElement.querySelectorAll(".input");
+	inputs.forEach( function(input) {
+			let inner = input.parentElement;
+			let indexClass = String (inner.className.split(" ")[1]);
+
+			if (indexClass == "name") {
+				inner.innerHTML = data.length +  " " + input.value;
+				data[data.length-1].name = input.value;
+			} else if (indexClass == "type") {
+					inner.innerHTML = input.value;
+					data[data.length-1].type = input.value;
+				} else if (indexClass == "age") {
+					inner.innerHTML = input.value;
+					data[data.length-1].age = input.value;
+				}
+
+			inner.parentElement.classList = "strok";
+	});
+}
+
+
+
+
+
+
 
 // Добавляем таблицу на страницу
 main.appendChild(table);
@@ -126,6 +205,7 @@ deleteTable.forEach( function(item) {
 		let char = parseInt(name.slice(0,1));
 		delete data[char-1];
 		this.parentElement.remove();
+		deleteTable = document.querySelectorAll(".delete");
 		stroks = document.querySelectorAll(".stroks");
 	}
 });
