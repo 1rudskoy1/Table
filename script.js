@@ -1,4 +1,5 @@
 let data = [{"name":"Mikky","type":"dog","age":3},{"name":"Neon","type":"cat","age":0.5},{"name":"Neon","type":"cat","age":0.5},{"name":"Neon","type":"cat","age":0.5}];
+
 //Создаём таблицу
 const table = document.createElement('table');
 const thead = document.createElement('thead');
@@ -90,6 +91,8 @@ function verify(contekst){
 
 			inner.parentElement.classList = "strok";
 	});
+	deleteTable = document.querySelectorAll(".delete");
+	deleteTable[deleteTable.length-1].onclick = deleteX;
 }
 
 
@@ -200,14 +203,16 @@ data.forEach( function(item) {
 
 
 deleteTable.forEach( function(item) {
-	item.onclick = function (){
+	item.onclick = deleteX;
+});
+
+function deleteX (){
 		let name = this.parentElement.querySelector(".name").innerHTML;
 		let char = parseInt(name.slice(0,1));
 		delete data[char-1];
 		this.parentElement.remove();
 		deleteTable = document.querySelectorAll(".delete");
 		stroks = document.querySelectorAll(".stroks");
-	}
-});
+}
 
 

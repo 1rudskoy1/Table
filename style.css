@@ -1,8 +1,21 @@
+main{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+}
+.main{
+	height: auto;
+	min-height: 300px;
+}
+
 table {
 font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 font-size: 14px;
 border-collapse: collapse;
 text-align: center;
+	width: 600px;
 }
 th, td:first-child {
 background: #AFCDE7;
